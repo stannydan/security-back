@@ -1,6 +1,7 @@
 package dan.security.security.controller.rest;
 
 import dan.security.security.model.Person;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +25,16 @@ public class PersonRestController {
         return list;
     }
 
+    @RequestMapping("/get/{id}")
+    Person show(@PathVariable("id") String id){
+        return list.stream().filter(person -> person.equals(id)).findFirst().orElse(null);
+    }
+
+    @RequestMapping("/delete/{id}")
+    Person delete(@PathVariable("id") String id){
+        Person p= show(id);
+        list.remove(id);
+        return p;
+    }
 
 }
